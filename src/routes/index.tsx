@@ -15,6 +15,7 @@ import humanPortrait from "@/assets/Human1.jpeg";
 import tiger from "@/assets/Tiger.jpeg";
 import { profile, aboutCards, skills, projects, experience, education } from "../lib/content";
 import emailjs from "@emailjs/browser";
+import { Gallery } from "@/components/Gallery";
 
 export const Route = createFileRoute("/")({
   component: Portfolio,
@@ -64,7 +65,7 @@ function Portfolio() {
       <About />
       <Skills />
       <Work />
-      <Gallery />
+      <Gallery featured />
       <Timeline />
       <Contact />
       <Footer />
@@ -421,83 +422,7 @@ function Work() {
   );
 }
 
-/* ---------------- GALLERY ---------------- */
 
-function Gallery() {
-  const [open, setOpen] = useState<string | null>(null);
-  return (
-    <Section
-      id="gallery"
-      eyebrow="04 · Art Gallery"
-      title={
-        <>
-          Beyond <em className="text-gradient-gold italic">Code.</em>
-        </>
-      }
-    >
-      <p className="mx-auto mb-12 max-w-2xl text-center text-muted-foreground leading-8">
-        Sketching is where I slow down and refine observation, patience, and precision. These
-        qualities influence how I approach software engineering - designing solutions with
-        creativity, discipline, and attention to detail.
-      </p>
-      <div className="grid auto-rows-[180px] grid-cols-2 gap-3 md:grid-cols-4 md:auto-rows-[220px] md:gap-4">
-        {galleryImages.map((g, i) => (
-          <motion.button
-            key={i}
-            onClick={() => setOpen(g.src)}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, delay: i * 0.06 }}
-            data-hover
-            className={`group relative overflow-hidden rounded-2xl border border-border ${g.span}`}
-          >
-            <img
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-              <div className="p-6">
-                <h3 className="text-lg font-serif text-white">{g.title}</h3>
-              </div>
-            </div>
-          </motion.button>
-        ))}
-      </div>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setOpen(null)}
-            className="fixed inset-0 z-[80] flex items-center justify-center bg-background/95 backdrop-blur-xl p-6"
-          >
-            <button
-              onClick={() => setOpen(null)}
-              className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full glass"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              src={open}
-              alt=""
-              className="max-h-[88vh] max-w-[88vw] rounded-2xl object-contain shadow-[var(--shadow-cinema)]"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </Section>
-  );
-}
 
 /* ---------------- TIMELINE ---------------- */
 
